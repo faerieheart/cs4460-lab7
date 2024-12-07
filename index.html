@@ -1,17 +1,23 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>The Relationship Between Covid-19 Precautions and Long Covid</title>
-    <link rel="stylesheet" href="./style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Infection Rate Gas</title>
+  <style>
+    canvas {
+      display: block;
+      margin: 0 auto;
+      background: white; 
+    }
+  </style>
 </head>
 <body>
-    <div id="main">
-        <svg></svg>
-    </div>
+  <div id="canvas-container">
+    <canvas id="gasCloudCanvas"></canvas>
+  </div>
+
+  <!-- Link to external JavaScript file -->
+  <script src="main.js"></script>
 </body>
-<script src="https://d3js.org/d3.v6.min.js"></script>
-<script src="https://d3js.org/topojson.v2.min.js"></script>
-<script src="./d3-tip.js"></script>
-<script src="./main.js"></script>
 </html>
