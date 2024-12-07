@@ -1,3 +1,5 @@
+
+
 .axis,
 .frame {
   shape-rendering: crispEdges;
@@ -104,4 +106,5 @@ label {
 
 #main {
     margin: 20px;
+    display: flex;
 }
