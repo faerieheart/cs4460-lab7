@@ -1,5 +1,5 @@
 // Get the container element by its ID
-const container = document.getElementById("#imageContainer");
+const container = document.getElementById("imageContainer");
 
 // Create and configure the image
 const image = document.createElement("img");
