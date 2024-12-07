@@ -6,12 +6,19 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <div id="main">
+    <main>
+        <section>
+            <h4>Cases by Age by Vaccination Status</h4>
+            <div>
+                <svg id="CasexAge" width="750" height="500">
+                    <!-- Here goes your chart -->
+                </svg>
+            </div>
+        </section>
         <svg></svg>
-    </div>
+    </main>
 </body>
 <script src="https://d3js.org/d3.v6.min.js"></script>
 <script src="https://d3js.org/topojson.v2.min.js"></script>
-<script src="./d3-tip.js"></script>
-<script src="./main.js"></script>
+<script src="./main.js" type="module"></script>
 </html>
