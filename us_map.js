@@ -35,7 +35,7 @@ mapG.append("g")
     .call(legendColor);
 
 mapG.append("g")
-    .attr("transform", "translate(300,"+3*svgHeight/4+")")
+    .attr("transform", "translate("+svgWidth*0.15+","+3*svgHeight/4+")")
     .call(legendSize);
 
 
