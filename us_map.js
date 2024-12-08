@@ -1,8 +1,10 @@
 var svg = d3.select('#map');
 
 // Get layout parameters
-var svgWidth = +(svg.attr('width'));
+var svgWidth = +svg.attr('width');
 var svgHeight = +svg.attr('height');
+
+console.log(svgWidth, svgHeight);
 
 var padding = {t: 40, r: 40, b: 40, l: 40};
 var cellPadding = 10;
