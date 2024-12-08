@@ -1,3 +1,5 @@
+
+
 .axis,
 .frame {
   shape-rendering: crispEdges;
@@ -30,9 +32,14 @@
   stroke: #aaa;
 }
 
-circle.state {
-  fill-opacity: 0.6;
-  pointer-events: none;
+circle.hidden {
+  fill: #ccc !important;
+  fill-opacity: .2;
+}
+
+circle:hover {
+  fill: #111 !important;
+  fill-opacity: 1;
 }
 
 .d3-tip {
@@ -89,6 +96,20 @@ body {
     margin: 0;
 }
 
+label {
+    font-size: 13px;
+}
+
+#main {
+    margin: 20px;
+    display: flex;
+}
+
+circle.state {
+  fill-opacity: 0.6;
+  pointer-events: none;
+}
+
 .label {
     font-size: 28px;
     font-weight: 600;
@@ -97,10 +118,6 @@ body {
 .legendTitle {
     font-size: 30px;
     font-weight: 500;
-}
-
-#main {
-    margin: 20px;
 }
 
 .state {
