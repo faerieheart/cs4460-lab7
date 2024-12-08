@@ -4,8 +4,6 @@ var svg = d3.select('#map');
 var svgWidth = +svg.attr('width');
 var svgHeight = +svg.attr('height');
 
-console.log(svgWidth, svgHeight);
-
 var padding = {t: 40, r: 40, b: 40, l: 40};
 var cellPadding = 10;
 
@@ -13,30 +11,37 @@ var cellPadding = 10;
 var mapG = svg.append('g');
 
 // Global size scale for state vaccination rate
-const circleRadius = d3.scaleLinear([.5, 1.0], [5, 40]);
+const circleRadius = d3.scaleLinear([.5, 1.0], [5, 50]);
 // global color scale for state covid death rate
 var color = d3.scaleSequential([0, 2200], d3.interpolateBlues);
 
 var legendColor = d3.legendColor()
     .scale(color).cells(10)
-    .ascending(true).shapeWidth(20).shapeHeight(20)
+    .ascending(true).shapeWidth(30).shapeHeight(30)
     .title("Covid Death Rate per 1M Population")
-    .titleWidth(svgWidth * 0.15);
+    .titleWidth(250);
 
 var legendSize = d3.legendSize()
     .scale(circleRadius).cells(10)
-    .shape("circle").shapePadding(20).orient('horizontal')
+    .shape("circle").shapePadding(10)
     .labelFormat(d3.format(".0%"))
     .title("Vaccination Rate")
+    .titleWidth(10);
 
 mapG.append("g")
-    .attr("transform", "translate(10,"+svgHeight/6+")")
+    .attr("transform", "translate(100,300)")
     .attr("class", "legend")
     .call(legendColor);
 
 mapG.append("g")
-    .attr("transform", "translate("+svgWidth*0.15+","+3*svgHeight/4+")")
+    .attr("transform", "translate(400,175)")
     .call(legendSize);
+
+mapG.append("g")
+    .append("text")
+    .text("Vaccination Rate vs Covid-19 Death Rate in the US 2021-2022")
+    .attr("transform", "translate(1200, 150)")
+    .attr("class", "title");
 
 
 // show specific info about state
@@ -196,7 +201,7 @@ const newShade = (hexColor, magnitude) => {
     }
 };
 
-const myProjection = geoAlbersUsaPr().scale(svgWidth/1.2).translate([svgWidth/2, svgHeight/3.2]);
+const myProjection = geoAlbersUsaPr().scale(2500).translate([1600, 700]);
 
 d3.json("us_states_2.json").then(function(data){ 
 
@@ -216,7 +221,6 @@ d3.json("us_states_2.json").then(function(data){
                 .projection(myProjection)
             )
             .attr("class", "state")
-            .attr('fill-opacity', 0.5)
             .attr("stroke", "#000");
 
     console.log(data.features);
@@ -228,11 +232,7 @@ d3.json("us_states_2.json").then(function(data){
             .attr('cy', function(d) { return d3.geoPath().projection(myProjection).centroid(d.geometry)[1];})
             .attr('r', function(d) {return circleRadius(d.properties.vaccination/100); })
             .attr('fill', function(d) {return newShade(color(d.properties.coviddeath), -100);})
-            .attr('fill-opacity', 0.6)
-            .attr('pointer-events', 'none')
             .attr("class", "state");
-
-    //mapG.selectAll("circle.state").style({"pointer-events": "none"});
 
 
 /*   mapG.selectAll('rect')

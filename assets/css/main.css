@@ -1734,12 +1734,12 @@ circle.state {
 }
 
 .label {
-    font-size: 28px;
+    font-size: 12px;
     font-weight: 600;
 }
 
 .legendTitle {
-    font-size: 30px;
+    font-size: 18px;
     font-weight: 500;
 }
 
@@ -1748,7 +1748,7 @@ circle.state {
 }
 
 .legend {
-  font-size: 28px;
+  font-size: 8px;
   font-weight: 600;
 }
 
