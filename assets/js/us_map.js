@@ -26,6 +26,7 @@ var legendSize = d3.legendSize()
     .shape("circle").shapePadding(10)
     .labelFormat(d3.format(".0%"))
     .title("Vaccination Rate")
+    .titleWidth(10);
 
 mapG.append("g")
     .attr("transform", "translate(100,300)")
