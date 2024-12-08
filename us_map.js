@@ -1,7 +1,7 @@
 var svg = d3.select('#map');
 
 // Get layout parameters
-var svgWidth = +svg.attr('width');
+var svgWidth = +(svg.attr('width'));
 var svgHeight = +svg.attr('height');
 
 var padding = {t: 40, r: 40, b: 40, l: 40};
@@ -17,9 +17,9 @@ var color = d3.scaleSequential([0, 2200], d3.interpolateBlues);
 
 var legendColor = d3.legendColor()
     .scale(color).cells(10)
-    .ascending(true).shapeWidth(10).shapeHeight(10)
+    .ascending(true).shapeWidth(20).shapeHeight(20)
     .title("Covid Death Rate per 1M Population")
-    .titleWidth(250);
+    .titleWidth(svgWidth * 0.15);
 
 var legendSize = d3.legendSize()
     .scale(circleRadius).cells(10)
@@ -28,7 +28,7 @@ var legendSize = d3.legendSize()
     .title("Vaccination Rate")
 
 mapG.append("g")
-    .attr("transform", "translate(10,"+svgHeight/5+")")
+    .attr("transform", "translate(10,"+svgHeight/6+")")
     .attr("class", "legend")
     .call(legendColor);
 
@@ -230,7 +230,7 @@ d3.json("us_states_2.json").then(function(data){
             .attr('pointer-events', 'none')
             .attr("class", "state");
 
-    mapG.selectAll("circle.state").style({"pointer-events": "none"});
+    //mapG.selectAll("circle.state").style({"pointer-events": "none"});
 
 
 /*   mapG.selectAll('rect')

@@ -38,7 +38,7 @@
   background: rgba(240, 240, 240, 0.95);
   color: #333;
   border-radius: 4px;
-  font-size: 28px;
+  font-size: 18px;
 }
 
 /* Creates a small triangle extender for the tooltip */
@@ -62,14 +62,14 @@
 }
 
 .d3-tip h5{
-  font-size: 30px;
+  font-size: 20px;
   font-weight: 600;
   margin: 2px 10px 4px 2px;
 }
 
 .d3-tip thead td {
   border-bottom: 1px solid #ccc;
-  font-size: 28px;
+  font-size: 18px;
   font-weight: 600;
 }
 
@@ -101,13 +101,11 @@ circle.state {
 }
 
 .label {
-    font-size: 28px;
-    font-weight: 600;
+    font-size: 18px;
 }
 
 .legendTitle {
-    font-size: 30px;
-    font-weight: 500;
+    font-size: 20px;
 }
 
 .state {
@@ -115,16 +113,10 @@ circle.state {
 }
 
 .legend {
-  font-size: 28px;
-  font-weight: 600;
+  font-size: 18px;
 }
 
 .swatch {
-  fill-opacity: 1;
+  fill-opacity: 0.5;
   fill: #2e8ac7;
-}
-
-.title {
-  font-size: 35px;
-  font-weight: 600;
 }
