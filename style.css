@@ -32,10 +32,6 @@
   stroke: #aaa;
 }
 
-circle {
-  fill-opacity: .7;
-}
-
 circle.hidden {
   fill: #ccc !important;
   fill-opacity: .2;
@@ -52,7 +48,7 @@ circle:hover {
   background: rgba(240, 240, 240, 0.95);
   color: #333;
   border-radius: 4px;
-  font-size: 12px;
+  font-size: 28px;
 }
 
 /* Creates a small triangle extender for the tooltip */
@@ -76,14 +72,14 @@ circle:hover {
 }
 
 .d3-tip h5{
-  font-size: 13px;
+  font-size: 30px;
   font-weight: 600;
   margin: 2px 10px 4px 2px;
 }
 
 .d3-tip thead td {
   border-bottom: 1px solid #ccc;
-  font-size: 10px;
+  font-size: 28px;
   font-weight: 600;
 }
 
@@ -107,4 +103,38 @@ label {
 #main {
     margin: 20px;
     display: flex;
+}
+
+circle.state {
+  fill-opacity: 0.6;
+  pointer-events: none;
+}
+
+.label {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.legendTitle {
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.state {
+  fill-opacity: 0.5;
+}
+
+.legend {
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.swatch {
+  fill-opacity: 1;
+  fill: #2e8ac7;
+}
+
+.title {
+  font-size: 35px;
+  font-weight: 600;
 }
