@@ -46,11 +46,34 @@ function findStatusByColor(legend, color){
         return "Non-Boosted";
     }
 }
+function createLegend(svg, legendData) {
+    const legendWidth = 100;
+    const legendHeight = 200;
+    const legendPadding = 20;
+    const legendGroup = svg.append("g");
+    legendData.forEach((d, i) => {
+        const legendItem = legendGroup.append("g")
+            .attr("transform", `translate(0, ${i * (legendHeight + legendPadding)})`);
 
+        legendItem.append("rect")
+            .attr("width", 5)
+            .attr("height", 5)
+            .attr("fill", d.color);
+        legendItem.append("text")
+            .attr("x", legendWidth + 10)
+            .attr("y", legendHeight + legendPadding + (5*i))
+            .attr("dy", ".35em")
+            .text(d.label)
+            .style("font-size", "14px");
+    });
+}
 async function AgeByVaccinationCharts() {
     const mainDiv = d3.select("#Age-by-Vaccination");
     const svgVacByReInfection = d3.select("#Age-by-Vaccination-by-ReInfection");
+    const svgLegendInfections = d3.select("#Infection-Legend");
+    const svgLegendReInfections = d3.select("#ReInfection-Legend");
     const svgVacByInfection = d3.select("#Age-by-Vaccination-by-Infection");
+
     const legendDataVacByInfection = [
         {color: "#5c1907", label: "UnVaccinated Cases"},
         {color: "#b25812", label: "Primary Vaccination Cases"},
@@ -69,8 +92,6 @@ async function AgeByVaccinationCharts() {
         var mouseover = function(d) {
             var subgroupName = d3.select(this)._groups[0][0].__data__.key;
             var subgroupStatus = findStatusByColor(legendDataVacByInfection, d3.select(this).attr("fill"));
-            console.log(subgroupName);
-            console.log(subgroupStatus);
             d3.selectAll("rect")
                 .style("opacity", function(d) {
                     var currFill = d3.select(this).attr("fill");
@@ -85,7 +106,6 @@ async function AgeByVaccinationCharts() {
                         return 0.1;
                     }
                 });
-            //d3.selectAll(`.${subgroupName}`).style("opacity", 1)
         }
 
         var mouseleave = function(d) {
@@ -139,64 +159,62 @@ async function AgeByVaccinationCharts() {
         
            
             var maxPopulation = Math.max(ageGroup1.max,ageGroup2.max,ageGroup3.max);
-        
-            // Define scales for the x and y axes
             const xScale = d3.scaleBand()
                 .domain(formattedData.map(d => d.key))  
                 .range([0, chartWidth])
                 .padding(0.1);  
-        
             const yScale = d3.scaleLinear()
                 .domain([0, roundToHighestPlaceVal(maxPopulation)])
-                .range([chartHeight, 0]);
+                .range([chartHeight + padding.bottom, 0]);
         
-            console.log('xScale domain:', xScale.domain());
-            console.log('yScale domain:', yScale.domain());
             const xAxis = d3.axisBottom(xScale);
             const yAxis = d3.axisLeft(yScale);
-        
-            // Append the axes to the SVG
             svgVacByInfection.append("g")
-                .attr("transform", `translate(${padding.left}, ${svgHeight - padding.bottom})`) // Position x-axis
+                .attr("transform", `translate(${padding.left}, ${padding.top + chartHeight})`)
                 .call(xAxis);
-        
             svgVacByInfection.append("g")
-                .attr("transform", `translate(${padding.left}, ${padding.top})`)  // Position y-axis
+                .attr("transform", `translate(${padding.left}, ${0})`)
                 .call(yAxis);
-        
-            // You can now add the bars or other visual elements to the chart
+            svgVacByInfection.append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("x", -(chartHeight - padding.top -20) ) 
+                .attr("y", padding.left*2/3) 
+                .attr("text-anchor", "middle")
+                .attr("font-size", "12px")
+                .text("Infections Per 100,000 People");
+            svgVacByInfection.append("text")
+                .attr("x", chartWidth - padding.left)
+                .attr("y", chartHeight + padding.bottom*1.9 )
+                .attr("text-anchor", "middle")
+                .attr("font-size", "12px")
+                .text("Age Group");
             const bWidth = xScale.bandwidth()/3;
 
             formattedData.forEach((ageGroup, i) => {
-                // Boosted cases
                 svgVacByInfection.selectAll(`.unBoostedCases`)
                     .data([ageGroup])
                     .enter().append("rect")
-                    .attr("x", padding.left + xScale(ageGroup.key))
+                    .attr("x", padding.left + xScale(ageGroup.key) + 2 * bWidth)
                     .attr("y", d => yScale(d.crude_unvax_ir))
                     .attr("width", bWidth)
                     .attr("height", d => chartHeight + padding.bottom - yScale(d.crude_unvax_ir))
                     .attr("fill", legendDataVacByInfection[0].color )
                     .on("mouseover", mouseover)
-                    .on("mouseleave", mouseleave);
-        
-                // Vaccine cases
+                    .on("mouseleave", mouseleave);        
                 svgVacByInfection.selectAll(`.unBoostedCases`)
                     .data([ageGroup])
                     .enter().append("rect")
                     .attr("x", padding.left + xScale(ageGroup.key) + bWidth)
                     .attr("y", d => yScale(d.crude_primary_series_only_ir))
                     .attr("width", bWidth)
-                    .attr("height", d => chartHeight + padding.bottom  - yScale(d.crude_primary_series_only_ir))
+                    .attr("height", d => chartHeight + padding.bottom - yScale(d.crude_primary_series_only_ir))
                     .attr("fill", legendDataVacByInfection[1].color)
                     .on("mouseover", mouseover)
                     .on("mouseleave", mouseleave);
-        
-                // Unvaccinated cases
                 svgVacByInfection.selectAll(`.boostedCases`)
                     .data([ageGroup])
                     .enter().append("rect")
-                    .attr("x", padding.left + xScale(ageGroup.key) + 2 * bWidth)
+                    .attr("x", padding.left + xScale(ageGroup.key))
                     .attr("y", d => yScale(d.crude_booster_ir))
                     .attr("width", bWidth)
                     .attr("height", d => chartHeight + padding.bottom - yScale(d.crude_booster_ir))
@@ -204,7 +222,9 @@ async function AgeByVaccinationCharts() {
                     .on("mouseover", mouseover)
                     .on("mouseleave", mouseleave);
             });
+
         }
+
 
         function populateReInfectionChart(data) {
 
@@ -243,39 +263,42 @@ async function AgeByVaccinationCharts() {
             calculateReInfectionTotals(data, AllAges);
             console.log(ageGroup1, ageGroup2, ageGroup3, AllAges);
 
-            var formattedData = [ageGroup1, ageGroup2, ageGroup3];//, AllAges];
+            var formattedData = [ageGroup1, ageGroup2, ageGroup3];
 
             var maxPopulation = Math.max(ageGroup1.max, ageGroup2.max, ageGroup3.max, AllAges.max);
 
-            // Define scales for the x and y axes
             const xScale = d3.scaleBand()
-                .domain(formattedData.map(d => d.key))  // Set the domain to be the unique age values
+                .domain(formattedData.map(d => d.key))
                 .range([0, chartWidth])
-                .padding(0.1);  // Adds padding between bars (if you're plotting bars)
-
+                .padding(0.1);  
             const yScale = d3.scaleLinear()
-                .domain([0, roundToHighestPlaceVal(maxPopulation)])  // Set the domain to be the max case count
-                .range([chartHeight, padding.top]);  // Flip the range so the higher values are at the top
-
-            // Create the axes using d3.axisBottom for the x-axis and d3.axisLeft for the y-axis
-            console.log('xScale domain:', xScale.domain());
-            console.log('yScale domain:', yScale.domain());
+                .domain([0, roundToHighestPlaceVal(maxPopulation)])  
+                .range([chartHeight + padding.bottom, 0]);
             const xAxis = d3.axisBottom(xScale);
             const yAxis = d3.axisLeft(yScale);
 
-            // Append the axes to the SVG
             svgVacByReInfection.append("g")
-                .attr("transform", `translate(${padding.left}, ${svgHeight - padding.bottom})`) // Position x-axis
+                .attr("transform", `translate(${padding.left}, ${padding.top + chartHeight})`)
                 .call(xAxis);
-
             svgVacByReInfection.append("g")
-                .attr("transform", `translate(${padding.left}, ${padding.top})`)  // Position y-axis
+                .attr("transform", `translate(${padding.left}, ${0})`) 
                 .call(yAxis);
-
-            // You can now add the bars or other visual elements to the chart
+            svgVacByReInfection.append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("x", -svgHeight*7/12) 
+                .attr("y", padding.left*2/3)
+                .attr("text-anchor", "middle")
+                .attr("font-size", "12px")
+                .text("ReInfections Per 100,000 People");
+            svgVacByReInfection.append("text")
+                .attr("x", chartWidth - padding.left)
+                .attr("y", chartHeight + padding.bottom*1.9 )
+                .attr("text-anchor", "middle")
+                .attr("font-size", "12px")
+                .text("Age Groups");
             const bWidth = xScale.bandwidth() / 2;
+            
             formattedData.forEach((ageGroup, i) => {
-                // Boosted cases
                 svgVacByReInfection.selectAll(`.boostedCases`)
                     .data([ageGroup])
                     .enter().append("rect")
@@ -286,8 +309,6 @@ async function AgeByVaccinationCharts() {
                     .attr("fill", legendDataVacByInfection[3].color)                    
                     .on("mouseover", mouseover)
                     .on("mouseleave", mouseleave);
-
-                // Vaccine cases
                 svgVacByReInfection.selectAll(`.unBoostedCases`)
                     .data([ageGroup])
                     .enter().append("rect")
@@ -302,24 +323,17 @@ async function AgeByVaccinationCharts() {
         }
         mainDiv.selectAll("rect")
             .on("mouseover", function (event, d) {
-                console.log("MouseEntered "+this.getAttribute("class") );
                 svgVacByInfection.selectAll("rect").style("opacity", 0.2);
                 svgVacByReInfection.selectAll("rect").style("opacity", 0.2);
                 const rectClass = this.getAttribute("class");
-                // Restore opacity for corresponding elements in both SVGs
                 svgVacByInfection.selectAll(`.${rectClass}`).style("opacity", 1);
                 svgVacByReInfection.selectAll(`.${rectClass}`).style("opacity", 1);
             })
             .on("mouseout", function () {
-                console.log("MouseExit "+this.getAttribute("class") );
-                // Reset opacity to full for both SVGs
                 const rectClass = this.getAttribute("class");
-                // Restore opacity for corresponding elements in both SVGs
                 svgVacByInfection.selectAll(`.${rectClass}`).style("opacity", 1);
                 svgVacByReInfection.selectAll(`.${rectClass}`).style("opacity", 1);
             });
-        
-
         const data = await d3.csv("Cases-by-Age-by-Vaccination-Status.csv");
         populateInfectionChart(data);
         populateReInfectionChart(data);
