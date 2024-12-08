@@ -32,16 +32,6 @@
   stroke: #aaa;
 }
 
-circle.hidden {
-  fill: #ccc !important;
-  fill-opacity: .2;
-}
-
-circle:hover {
-  fill: #111 !important;
-  fill-opacity: 1;
-}
-
 .d3-tip {
   line-height: 1;
   padding: 6px;
@@ -106,8 +96,8 @@ label {
 }
 
 circle.state {
-  fill-opacity: 0.6;
-  pointer-events: none;
+  fill-opacity: 0.6 !important;
+  pointer-events: none !important;
 }
 
 .label {
@@ -121,7 +111,7 @@ circle.state {
 }
 
 .state {
-  fill-opacity: 0.5;
+  fill-opacity: 0.5 !important;
 }
 
 .legend {
