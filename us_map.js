@@ -1,7 +1,7 @@
 var svg = d3.select('#map');
 
 // Get layout parameters
-var svgWidth = +svg.attr('width');
+var svgWidth = +(svg.attr('width'));
 var svgHeight = +svg.attr('height');
 
 var padding = {t: 40, r: 40, b: 40, l: 40};
@@ -200,7 +200,7 @@ const newShade = (hexColor, magnitude) => {
     }
 };
 
-const myProjection = geoAlbersUsaPr().scale(2500).translate([1600, 700]);
+const myProjection = geoAlbersUsaPr().scale(2000).translate([1600, 700]);
 
 d3.json("us_states_2.json").then(function(data){ 
 
