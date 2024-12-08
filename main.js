@@ -18,16 +18,19 @@ function drawBubble(x, y, radius, color, shadowBlur) {
 }
 
 function drawGasCloud() {
-  drawBubble(gasCloudCenterX - 100, gasCloudCenterY, 120, "rgba(144, 238, 144, 0.9)", 20); 
-  drawBubble(gasCloudCenterX + 50, gasCloudCenterY - 50, 100, "rgba(50, 205, 50, 0.8)", 20);
-  drawBubble(gasCloudCenterX, gasCloudCenterY + 80, 80, "rgba(34, 139, 34, 0.7)", 15);
-  drawBubble(gasCloudCenterX + 150, gasCloudCenterY + 20, 70, "rgba(144, 238, 144, 0.9)", 10);
 
-  drawBubble(gasCloudCenterX - 170, gasCloudCenterY - 50, 50, "rgba(50, 205, 50, 0.6)", 10);
-  drawBubble(gasCloudCenterX + 200, gasCloudCenterY + 80, 40, "rgba(144, 238, 144, 0.7)", 8);
-  drawBubble(gasCloudCenterX - 150, gasCloudCenterY + 120, 30, "rgba(34, 139, 34, 0.5)", 5);
-  drawBubble(gasCloudCenterX + 250, gasCloudCenterY - 60, 25, "rgba(144, 238, 144, 0.5)", 5);
-  drawBubble(gasCloudCenterX + 300, gasCloudCenterY + 40, 20, "rgba(50, 205, 50, 0.4)", 3);
+  var color = "rgba(144, 238, 144, 0.9)"
+
+  drawBubble(gasCloudCenterX - 100, gasCloudCenterY, 120, color, 20); 
+  drawBubble(gasCloudCenterX + 50, gasCloudCenterY - 50, 100, color, 20);
+  drawBubble(gasCloudCenterX, gasCloudCenterY + 80, 80, color, 15);
+  drawBubble(gasCloudCenterX + 150, gasCloudCenterY + 20, 70, color, 10);
+
+  drawBubble(gasCloudCenterX - 170, gasCloudCenterY - 50, 50, color, 10);
+  drawBubble(gasCloudCenterX + 200, gasCloudCenterY + 80, 40, color, 8);
+  drawBubble(gasCloudCenterX - 150, gasCloudCenterY + 120, 30, color, 5);
+  drawBubble(gasCloudCenterX + 250, gasCloudCenterY - 60, 25, color, 5);
+  drawBubble(gasCloudCenterX + 300, gasCloudCenterY + 40, 20, color, 3);
 }
 
 function drawLinePlot() {
