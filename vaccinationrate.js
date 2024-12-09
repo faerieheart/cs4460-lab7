@@ -340,4 +340,4 @@ async function AgeByVaccinationCharts() {
     }
     await vacByInfection();    
 }
-await AgeByVaccinationCharts();
+ AgeByVaccinationCharts();
