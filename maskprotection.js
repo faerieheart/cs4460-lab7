@@ -79,7 +79,7 @@ function drawLinePlot() {
 
     if (i === 0) label = "Cloth Mask";
     if (i === 1) label = "Surgical Mask";
-    if (i === 2) label = "N59 Mask";
+    if (i === 2) label = "N95 Mask";
 
     ctx.font = "14px Arial";
     ctx.fillStyle = "black";
