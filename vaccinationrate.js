@@ -47,25 +47,33 @@ function findStatusByColor(legend, color){
     }
 }
 function createLegend(svg, legendData) {
-    const legendWidth = 100;
-    const legendHeight = 200;
-    const legendPadding = 20;
-    const legendGroup = svg.append("g");
-    legendData.forEach((d, i) => {
-        const legendItem = legendGroup.append("g")
-            .attr("transform", `translate(0, ${i * (legendHeight + legendPadding)})`);
-
-        legendItem.append("rect")
-            .attr("width", 5)
-            .attr("height", 5)
-            .attr("fill", d.color);
-        legendItem.append("text")
-            .attr("x", legendWidth + 10)
-            .attr("y", legendHeight + legendPadding + (5*i))
-            .attr("dy", ".35em")
-            .text(d.label)
-            .style("font-size", "14px");
-    });
+    const legendWidth = Number(svg.attr("width"));
+    const legendHeight = Number(svg.attr("height"));
+    const colorGroup = svg.append("g");
+    const textGroup = svg.append("g");
+    const padding = {left:20, top: 30, bottom: 30 };
+    const scale = d3.scaleLinear()
+        .domain([0,legendData.length-1])
+        .range([padding.top, legendHeight - padding.bottom]);    
+    
+    colorGroup.selectAll("circle")
+        .data(legendData)
+        .enter()
+        .append("circle")
+        .attr("cx", padding.left)  // Set the x position of the circle
+        .attr("cy", (d, i) => scale(i))  // Set the y position based on scale
+        .attr("r", 4)  // Set the radius of each circle
+        .attr("fill", d => d.color);  // Set the fill color from legendData
+    textGroup.selectAll("text")
+        .data(legendData)
+        .enter()
+        .append("text")
+        .attr("x", padding.left * 2)  // Position text horizontally
+        .attr("y", (d, i) => scale(i))  // Position text vertically based on scale
+        .attr("dy", 5)  // Adjust vertical alignment of the text
+        .text(d => d.label);  // Set the text content from legendData
+    console.log(colorGroup);
+    console.log(textGroup);
 }
 async function AgeByVaccinationCharts() {
     const mainDiv = d3.select("#Age-by-Vaccination");
@@ -75,13 +83,16 @@ async function AgeByVaccinationCharts() {
     const svgVacByInfection = d3.select("#Age-by-Vaccination-by-Infection");
 
     const legendDataVacByInfection = [
-        {color: "#5c1907", label: "UnVaccinated Cases"},
-        {color: "#b25812", label: "Primary Vaccination Cases"},
-        {color: "#ffa600", label: "Boosted Vaccination Cases"},
-        {color: "#234455", label: "Non - Boosted Cases"},
-        {color: "#444444", label: "Boosted Vaccination Cases"},
+        {color: "#ffa600", label: "UnVaccinated Cases"},
+        {color: "#ff6361", label: "Primary Vaccination Cases"},
+        {color: "#58508d", label: "Boosted Vaccination Cases"},
+        {color: "#bc5090", label: "Non - Boosted Cases"},
+        {color: "#003f5c", label: "Boosted Vaccination Cases"},
     ];
     
+    createLegend(svgLegendInfections, legendDataVacByInfection.slice(0,3));
+    createLegend(svgLegendReInfections, legendDataVacByInfection.slice(3,5));
+
     async function vacByInfection() {
         const svgWidth = Number(svgVacByInfection.attr("width"));
         const svgHeight = Number(svgVacByInfection.attr("height"));
