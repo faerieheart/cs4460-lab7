@@ -5,8 +5,8 @@ const container = document.getElementById("symptomsImageContainer");
 
 // // // Create and configure the image
 const image = document.createElement("img");
-image.src = "assets/img/SilohuetteOfSick.png";
-image.alt = "5 silhouettes of people who are sick.";
+image.src = "assets/img/sick-woman.jpg";
+image.alt = "Sick woman holding bottle of pills and drugs.";
 image.style.width = "600px"; // Example styling
 image.style.height = "400px";
 // // Append the image to the container
